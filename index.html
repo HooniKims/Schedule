@@ -145,51 +145,78 @@
         }
 
         @media screen and (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
             .calendar-container {
-                padding: 12px;
-                width: 95%;
+                padding: 15px;
+                width: 100%;
+                max-width: 100%;
+                aspect-ratio: auto;
+                min-height: 90vh;
             }
             .calendar-header {
                 gap: 15px;
+                margin-bottom: 20px;
+            }
+            .calendar-header h2 {
+                font-size: 1.8rem;
+            }
+            .nav-button {
+                font-size: 1.5rem;
+                padding: 8px 12px;
+            }
+            .calendar th {
+                padding: 12px;
+                font-size: 1.2rem;
+            }
+            .calendar td {
+                padding: 12px;
+                font-size: 1.1rem;
+                min-height: 100px;
+            }
+            .d-day {
+                padding: 8px 12px;
+                font-size: 1rem;
+            }
+            .calendar-title {
+                font-size: 1.4rem;
+                margin-top: 20px;
+                padding: 15px 0;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+            .calendar-container {
+                padding: 10px;
             }
             .calendar-header h2 {
                 font-size: 1.5rem;
             }
             .nav-button {
                 font-size: 1.3rem;
-                padding: 5px 10px;
+                padding: 6px 10px;
             }
-            .calendar th, .calendar td {
-                padding: 8px;
+            .calendar th {
+                padding: 10px;
+                font-size: 1.1rem;
+            }
+            .calendar td {
+                padding: 10px;
+                font-size: 1rem;
+                min-height: 90px;
+            }
+            .d-day {
+                padding: 6px 10px;
                 font-size: 0.9rem;
             }
-            .d-day {
-                padding: 5px 10px;
-                font-size: 0.85rem;
-            }
-        }
-
-        @media screen and (max-width: 480px) {
-            .calendar-container {
-                padding: 12px;
-                width: 95%;
-            }
-            .calendar-header {
-                gap: 10px;
-            }
-            .calendar-header h2 {
+            .calendar-title {
                 font-size: 1.2rem;
-            }
-            .nav-button {
-                font-size: 1rem;
-            }
-            .calendar th, .calendar td {
-                padding: 6px;
-                font-size: 0.8rem;
-            }
-            .d-day {
-                padding: 4px 8px;
-                font-size: 0.8rem;
+                margin-top: 15px;
+                padding: 12px 0;
             }
         }
 
