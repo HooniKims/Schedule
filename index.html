@@ -146,18 +146,77 @@
 
         @media screen and (max-width: 768px) {
             body {
-                padding: 10px;
+                padding: 0;
+                margin: 0;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
             }
             .calendar-container {
-                padding: 15px;
+                padding: 10px;
                 width: 100%;
                 max-width: 100%;
                 aspect-ratio: auto;
-                min-height: 90vh;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
             }
             .calendar-header {
+                flex-direction: column;
+                gap: 10px;
+                margin-bottom: 15px;
+                position: relative;
+            }
+            .month-container {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
                 gap: 15px;
-                margin-bottom: 20px;
+            }
+            .calendar-header h2 {
+                font-size: 2rem;
+            }
+            .nav-button {
+                font-size: 1.8rem;
+                padding: 10px 15px;
+            }
+            .d-day {
+                position: static;
+                width: 100%;
+                text-align: center;
+                margin-top: 10px;
+                font-size: 1.2rem;
+                padding: 10px;
+            }
+            .calendar {
+                flex: 1;
+                width: 100%;
+            }
+            .calendar th {
+                padding: 15px 5px;
+                font-size: 1.3rem;
+            }
+            .calendar td {
+                padding: 15px 5px;
+                font-size: 1.2rem;
+                min-height: 120px;
+                height: auto;
+                aspect-ratio: 1;
+            }
+            .holiday-name {
+                font-size: 0.9rem;
+            }
+            .calendar-title {
+                font-size: 1.5rem;
+                margin-top: 15px;
+                padding: 15px 0;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .calendar-container {
+                padding: 5px;
             }
             .calendar-header h2 {
                 font-size: 1.8rem;
@@ -166,56 +225,25 @@
                 font-size: 1.5rem;
                 padding: 8px 12px;
             }
+            .d-day {
+                font-size: 1.1rem;
+                padding: 8px;
+            }
             .calendar th {
-                padding: 12px;
+                padding: 12px 3px;
                 font-size: 1.2rem;
             }
             .calendar td {
-                padding: 12px;
+                padding: 12px 3px;
                 font-size: 1.1rem;
                 min-height: 100px;
             }
-            .d-day {
-                padding: 8px 12px;
-                font-size: 1rem;
+            .holiday-name {
+                font-size: 0.8rem;
             }
             .calendar-title {
-                font-size: 1.4rem;
-                margin-top: 20px;
-                padding: 15px 0;
-            }
-        }
-
-        @media screen and (max-width: 480px) {
-            body {
-                padding: 5px;
-            }
-            .calendar-container {
-                padding: 10px;
-            }
-            .calendar-header h2 {
-                font-size: 1.5rem;
-            }
-            .nav-button {
                 font-size: 1.3rem;
-                padding: 6px 10px;
-            }
-            .calendar th {
-                padding: 10px;
-                font-size: 1.1rem;
-            }
-            .calendar td {
-                padding: 10px;
-                font-size: 1rem;
-                min-height: 90px;
-            }
-            .d-day {
-                padding: 6px 10px;
-                font-size: 0.9rem;
-            }
-            .calendar-title {
-                font-size: 1.2rem;
-                margin-top: 15px;
+                margin-top: 12px;
                 padding: 12px 0;
             }
         }
