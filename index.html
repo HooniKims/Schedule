@@ -1339,7 +1339,9 @@
         let initialTouchY = null;
 
         function handleTouchStart(e) {
-            e.preventDefault();
+            if (e.cancelable) {
+                e.preventDefault();
+            }
             isTouching = true;
             const touch = e.touches[0];
             initialTouchX = touch.clientX;
@@ -1364,7 +1366,9 @@
         }
 
         function handleTouchEnd(e) {
-            e.preventDefault();
+            if (e.cancelable) {
+                e.preventDefault();
+            }
             if (isTouching) {
                 this.style.transform = 'scale(1)';
                 
@@ -1380,13 +1384,50 @@
             initialTouchY = null;
         }
 
+        // 터치 이벤트 리스너 등록
         prevButton.addEventListener('touchstart', handleTouchStart, { passive: false });
         prevButton.addEventListener('touchmove', handleTouchMove, { passive: false });
         prevButton.addEventListener('touchend', handleTouchEnd, { passive: false });
         nextButton.addEventListener('touchstart', handleTouchStart, { passive: false });
         nextButton.addEventListener('touchmove', handleTouchMove, { passive: false });
         nextButton.addEventListener('touchend', handleTouchEnd, { passive: false });
-        
+
+        // 셀 터치 이벤트 개선
+        function handleCellTouchStart(e) {
+            if (e.cancelable) {
+                e.preventDefault();
+            }
+            highlightCell(e.currentTarget);
+        }
+
+        function handleCellTouchEnd(e) {
+            if (e.cancelable) {
+                e.preventDefault();
+            }
+            removeHighlight();
+            const cell = e.currentTarget;
+            const day = parseInt(cell.textContent);
+            if (!isNaN(day)) {
+                const selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+                showPopup(selectedDate);
+            }
+        }
+
+        // 셀 이벤트 리스너 수정
+        function addCellEventListeners(cell) {
+            cell.addEventListener('mouseenter', () => highlightCell(cell));
+            cell.addEventListener('mouseleave', removeHighlight);
+            cell.addEventListener('touchstart', handleCellTouchStart, { passive: false });
+            cell.addEventListener('touchend', handleCellTouchEnd, { passive: false });
+            cell.addEventListener('click', () => {
+                const day = parseInt(cell.textContent);
+                if (!isNaN(day)) {
+                    const selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+                    showPopup(selectedDate);
+                }
+            });
+        }
+
         // 초기화 시 D-Day 계산 시작
         calculateDday();
         updateCalendar();
