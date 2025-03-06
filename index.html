@@ -228,6 +228,8 @@
             max-width: 400px;
             position: relative;
             animation: popupFadeIn 0.3s ease-out;
+            max-height: 80vh;
+            overflow-y: auto;
         }
         
         .popup-header {
@@ -235,6 +237,11 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 15px;
+            position: sticky;
+            top: 0;
+            background-color: white;
+            padding: 10px 0;
+            z-index: 1;
         }
         
         .popup-title {
@@ -1121,7 +1128,20 @@
             let afternoonContent = '';
 
             // 오전 일정 처리
-            if (schedule.morning.title) {
+            if (Array.isArray(schedule.morning)) {
+                morningContent = schedule.morning.map(item => `
+                    <div class="schedule-item">
+                        <div class="schedule-time">${item.time}</div>
+                        <div class="schedule-title">${item.title}</div>
+                        ${item.professor ? `
+                            <div class="schedule-details">
+                                <div>교수: ${item.professor}</div>
+                                <div>교재: ${item.textbook}</div>
+                            </div>
+                        ` : ''}
+                    </div>
+                `).join('');
+            } else if (schedule.morning.title) {
                 morningContent = `
                     <div class="schedule-item">
                         <div class="schedule-time">09:00 - 12:50</div>
@@ -1339,9 +1359,7 @@
         let initialTouchY = null;
 
         function handleTouchStart(e) {
-            if (e.cancelable) {
-                e.preventDefault();
-            }
+            e.preventDefault();
             isTouching = true;
             const touch = e.touches[0];
             initialTouchX = touch.clientX;
@@ -1366,9 +1384,7 @@
         }
 
         function handleTouchEnd(e) {
-            if (e.cancelable) {
-                e.preventDefault();
-            }
+            e.preventDefault();
             if (isTouching) {
                 this.style.transform = 'scale(1)';
                 
@@ -1384,50 +1400,13 @@
             initialTouchY = null;
         }
 
-        // 터치 이벤트 리스너 등록
         prevButton.addEventListener('touchstart', handleTouchStart, { passive: false });
         prevButton.addEventListener('touchmove', handleTouchMove, { passive: false });
         prevButton.addEventListener('touchend', handleTouchEnd, { passive: false });
         nextButton.addEventListener('touchstart', handleTouchStart, { passive: false });
         nextButton.addEventListener('touchmove', handleTouchMove, { passive: false });
         nextButton.addEventListener('touchend', handleTouchEnd, { passive: false });
-
-        // 셀 터치 이벤트 개선
-        function handleCellTouchStart(e) {
-            if (e.cancelable) {
-                e.preventDefault();
-            }
-            highlightCell(e.currentTarget);
-        }
-
-        function handleCellTouchEnd(e) {
-            if (e.cancelable) {
-                e.preventDefault();
-            }
-            removeHighlight();
-            const cell = e.currentTarget;
-            const day = parseInt(cell.textContent);
-            if (!isNaN(day)) {
-                const selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
-                showPopup(selectedDate);
-            }
-        }
-
-        // 셀 이벤트 리스너 수정
-        function addCellEventListeners(cell) {
-            cell.addEventListener('mouseenter', () => highlightCell(cell));
-            cell.addEventListener('mouseleave', removeHighlight);
-            cell.addEventListener('touchstart', handleCellTouchStart, { passive: false });
-            cell.addEventListener('touchend', handleCellTouchEnd, { passive: false });
-            cell.addEventListener('click', () => {
-                const day = parseInt(cell.textContent);
-                if (!isNaN(day)) {
-                    const selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
-                    showPopup(selectedDate);
-                }
-            });
-        }
-
+        
         // 초기화 시 D-Day 계산 시작
         calculateDday();
         updateCalendar();
